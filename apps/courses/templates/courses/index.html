@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css">
+        <title>Courses</title>
+    </head>
+    <body>
+        <div class="container">
+            <h2>Bootcamp Courses</h2>
+            <br>
+            {% if messages %}
+                {% for message in messages %}
+                <p class="alert alert-danger" >{{ message }}</p>
+                {% endfor %}
+            {% endif %}
+            <br>
+            <h4>Add a new course:</h4>    
+            <form action="/create" method="POST">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="nameInput">Name:</label>
+                    <input type="text" class="form-control" id="nameInput" name="html_name" placeholder="Enter course name">
+                </div>
+                <div class="form-group">
+                    <label for="descInput">Description:</label>
+                    <textarea class="form-control" id="descInput" rows="4" name="html_desc" placeholder="Enter course description"></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+            <br>
+            <br>
+            <h4>Course list:</h4>
+            <div class="row">
+                <div class="col-3">
+                    <h5>Name:</h5>
+                </div>
+                <div class="col-4">
+                    <h5>Description:</h5>                    
+                </div>
+                <div class="col">
+                    <h5>Date Added:</h5>                    
+                </div>
+                <div class="col">
+                  <h5>Actions:</h5>
+                </div>
+            </div>
+            {% for course in courses %}
+            <div class="row">
+                <div class="col-3">
+                    <p>{{ course.name }}</p>
+                </div>
+                <div class="col-4">
+                    <p>{{ course.desc }}</p>                    
+                </div>
+                <div class="col">
+                    <p>{{ course.created_at }}</p>                    
+                </div>
+                <div class="col">
+                    <a href="/delete/{{ course.id }}">Remove</a>
+                    <a href="/comment">Comments</a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </body>
+</html>
